@@ -1,2 +1,2 @@
-const addon = require('./build/Release/mutate');
+const addon = require('./build/Release/addon');
 
