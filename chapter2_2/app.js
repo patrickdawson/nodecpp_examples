@@ -25,3 +25,15 @@ console.log(addon.passString("hello"));
 console.log(addon.passString(42));
 console.log(addon.passString(null));
 console.log(addon.passString(undefined));
+
+console.log("\nObject");
+console.log("-------");
+var myObj = {x:1};
+console.log(addon.passObject(myObj));
+console.log(myObj);
+console.log("-------");
+myObj = {x:4, y:5};
+console.log(addon.passObject2(myObj));
+
+
+
