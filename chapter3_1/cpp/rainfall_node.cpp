@@ -46,8 +46,33 @@ void AvgRainfall(const FunctionCallbackInfo<Value>& args) {
     args.GetReturnValue().Set(retval);
 }
 
+void RainfallData(const FunctionCallbackInfo<Value> &args) {
+    Isolate* isolate = args.GetIsolate();
+
+    location loc = unpack_location(isolate, args);
+    rain_result result = calc_rain_stats(loc);
+
+    Local<Object> obj = Object::New(isolate);
+
+    obj->Set(
+        String::NewFromUtf8(isolate, "mean"),
+        Number::New(isolate, result.mean));
+    obj->Set(
+        String::NewFromUtf8(isolate, "median"),
+        Number::New(isolate, result.median));
+    obj->Set(
+        String::NewFromUtf8(isolate, "standard_deviation"),
+        Number::New(isolate, result.standard_deviation));
+    obj->Set(
+        String::NewFromUtf8(isolate, "n"),
+        Number::New(isolate, result.n));
+
+    args.GetReturnValue().Set(obj);
+}
+
 void init(Local<Object> exports) {
     NODE_SET_METHOD(exports, "avg_rainfall", AvgRainfall);
+    NODE_SET_METHOD(exports, "data_rainfall", RainfallData);
 }
 
 NODE_MODULE(rainfall, init)
