@@ -1,7 +1,3 @@
-const addon = require('./build/Release/mutate');
+const addon = require('./build/Release/addon');
 
-var myObj = {x:5};
-
-console.log(JSON.stringify(myObj));
-addon.mutate(myObj);
-console.log(JSON.stringify(myObj));
+console.log(addon.passNumber(1));

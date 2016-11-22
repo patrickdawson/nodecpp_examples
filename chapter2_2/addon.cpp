@@ -3,14 +3,20 @@
 
 using namespace v8;
 
-void Func(const FunctionCallbackInfo<Value>& args) {
+void PassNumber(const FunctionCallbackInfo<Value>& args) {
     Isolate* isolate = args.GetIsolate();
 
-    return;
+    Local<Number> target = args[0]->ToNumber();
+    double value = target->NumberValue();
+
+    value += 42;
+
+    Local<Number> retval = Number::New(isolate, value);
+    args.GetReturnValue().Set(retval);
 }
 
  void init(Local<Object> exports) {
-    NODE_SET_METHOD(exports, "func", Func);
+    NODE_SET_METHOD(exports, "passNumber", PassNumber);
  }
 
- NODE_MODULE(xxxx, init)
+ NODE_MODULE(addon, init)
