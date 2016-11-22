@@ -19,4 +19,4 @@ void Mutate(const FunctionCallbackInfo<Value>& args) {
     NODE_SET_METHOD(exports, "mutate", Mutate);
  }
 
- NODE_MODULE(callback, init)
+ NODE_MODULE(mutate, init)
