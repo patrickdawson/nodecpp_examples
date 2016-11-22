@@ -22,3 +22,6 @@ console.log(addon.passBoolean(undefined));
 console.log("\nString");
 console.log("-------");
 console.log(addon.passString("hello"));
+console.log(addon.passString(42));
+console.log(addon.passString(null));
+console.log(addon.passString(undefined));
