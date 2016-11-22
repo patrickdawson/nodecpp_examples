@@ -9,4 +9,5 @@ let location = {
     ]
 };
 let average = addon.avg_rainfall(location);
-console.log(average);
+
+console.log("Average rain fall = " + average + " cm");
