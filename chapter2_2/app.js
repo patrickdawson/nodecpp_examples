@@ -35,5 +35,8 @@ console.log("-------");
 myObj = {x:4, y:5};
 console.log(addon.passObject2(myObj));
 
-
-
+console.log("\nArray");
+console.log("-------");
+var myArray = [1,2,3];
+addon.incrementArray(myArray)
+console.log(myar);

@@ -82,6 +82,18 @@ void PassObject2(const FunctionCallbackInfo<Value>& args) {
     args.GetReturnValue().Set(obj);
 }
 
+void IncrementArray(const FunctionCallbackInfo<Value>& args) {
+    Isolate * isolate = args.GetIsolate();
+
+    Local<Array> array = Local<Array>::Cast(args[0]);
+    for (unsigned int i = 0; i < array->Length(); i++ ) {
+        double value = array->Get(i)->NumberValue();
+        array->Set(i, Number::New(isolate, value + 1));
+    }
+    // Like all objects, our changes will be reflected even if we
+    // don't return - as objects (and array) are mutable.
+}
+
  void init(Local<Object> exports) {
     NODE_SET_METHOD(exports, "passNumber", PassNumber);
     NODE_SET_METHOD(exports, "passInteger", PassInteger);
@@ -89,6 +101,7 @@ void PassObject2(const FunctionCallbackInfo<Value>& args) {
     NODE_SET_METHOD(exports, "passString", PassString);
     NODE_SET_METHOD(exports, "passObject", PassObject);
     NODE_SET_METHOD(exports, "passObject2", PassObject2);
+    NODE_SET_METHOD(exports, "incrementArray", IncrementArray);
  }
 
  NODE_MODULE(addon, init)
