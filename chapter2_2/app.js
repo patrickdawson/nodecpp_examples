@@ -18,3 +18,7 @@ console.log(addon.passBoolean(2));
 console.log(addon.passBoolean(false));
 console.log(addon.passBoolean(null));
 console.log(addon.passBoolean(undefined));
+
+console.log("\nString");
+console.log("-------");
+console.log(addon.passString("hello"));

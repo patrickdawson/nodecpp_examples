@@ -1,5 +1,5 @@
 #include <node.h>
-#include <cstdio>
+#include <string>
 
 using namespace v8;
 
@@ -41,10 +41,24 @@ void PassBoolean(const FunctionCallbackInfo<Value>& args) {
     args.GetReturnValue().Set(retval);
 }
 
+void PassString(const FunctionCallbackInfo<Value>& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    String::Utf8Value s(args[0]);
+
+    // wrap in c++ string instead
+    std::string str(*s);
+    std::reverse(str.begin(), str.end());
+
+    Local<String> retval = String::NewFromUtf8(isolate, str.c_str());
+    args.GetReturnValue().Set(retval);
+}
+
  void init(Local<Object> exports) {
     NODE_SET_METHOD(exports, "passNumber", PassNumber);
     NODE_SET_METHOD(exports, "passInteger", PassInteger);
     NODE_SET_METHOD(exports, "passBoolean", PassBoolean);
+    NODE_SET_METHOD(exports, "passString", PassString);
  }
 
  NODE_MODULE(addon, init)
