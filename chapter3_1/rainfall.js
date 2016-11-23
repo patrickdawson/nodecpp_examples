@@ -1,21 +1,36 @@
 "use strict";
 const addon = require('./cpp/build/Release/rainfall');
 
-let location = {
-    latitude: 40.71, longitude: -74.01,
-    samples: [
-        { date: "2016-06-07", rainfall: 2 },
-        { date: "2016-08-12", rainfall: 2.1 },
-        { date: "2016-08-12", rainfall: 1.8 },
-        { date: "2016-08-12", rainfall: 1.9 }
-    ]
-};
+let makeup = function makeup(max) {
+    return Math.round(max * Math.random() * 100) / 100;
+}
 
-let average = addon.avg_rainfall(location);
-console.log("Average rain fall = " + average + " cm");
+let locations = [];
+for (let i=0; i<10; ++i) {
+    const loc = {
+        latitude: makeup(180),
+        longitude: makeup(180),
+        samples: [
+            { date: "2015-07-20", rainfall: makeup(3) },
+            { date: "2015-07-21", rainfall: makeup(3) },
+            { date: "2015-07-22", rainfall: makeup(3) },
+            { date: "2015-07-23", rainfall: makeup(3) }
+        ]
+    }
+    locations.push(loc);
+}
 
-let data = addon.data_rainfall(location);
-console.log("Mean = " + data.mean)
-console.log("Median = " + data.median);
-console.log("Standard Deviation = " + data.standard_deviation);
-console.log("N = " + data.n);
+const results = addon.calculate_results(locations);
+
+let i=0;
+results.forEach(result => {
+    console.log(`Result for Location ${i}`);
+    console.log("--------------------------");
+    console.log(`\tLatitude: ${locations[i].latitude.toFixed(2)}`);
+    console.log(`\tLongitude: ${locations[i].longitude.toFixed(2)}`);
+    console.log(`\tMean Rainfall: ${result.mean.toFixed(2)} cm`);
+    console.log(`\tMedian Rainfall: ${result.median.toFixed(2)} cm`);
+    console.log(`\tStandard Dev: ${result.standard_deviation.toFixed(2)} cm`);
+    console.log(`\t Number Samples: ${result.n}`);
+    i += 1;
+});
